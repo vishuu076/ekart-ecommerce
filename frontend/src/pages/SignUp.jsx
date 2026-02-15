@@ -58,7 +58,11 @@ const SignUp = () => {
             }
         } catch (err) {
             console.log(err);
-            toast.error(err.response.data.message);
+            // 'res' mat use karo, 'err.response' use karo
+            const errorMsg = err.response?.data?.message || "User already exists or Signup failed!";
+            toast.error(errorMsg);
+        } finally {
+            setLoading(false);
         }
     }
 
