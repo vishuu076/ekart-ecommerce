@@ -11,15 +11,17 @@ export const verifyEmail = async (token, email) => {
   }
 
   const transporter = nodemailer.createTransport({
-    service: "Gmail",
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
     auth: {
       user: process.env.MAIL_USER,
-      pass: process.env.MAIL_PASS, // Gmail App Password
+      pass: process.env.MAIL_PASS,
     },
+    family: 4 
   });
 
   const encodedToken = encodeURIComponent(token);
-
   const verifyLink = `${process.env.FRONTEND_URL}/verify-email/${encodedToken}`;
 
   const mailConfig = {
