@@ -16,6 +16,8 @@
     "nodemailer": "^8.0.0",
     "multer": "^2.0.2",
     "cloudinary": "^2.9.0",
-    "razorpay": "^2.9.6"
+    "razorpay": "^2.9.6",
+    "datauri": "^4.1.0"
+
   }
 }
