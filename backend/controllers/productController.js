@@ -19,7 +19,7 @@ export const addProduct = async (req, res) => {
         if (req.files && req.files.length > 0) {
             for (let file of req.files) {
                 const fileUri = getDataUri(file)
-                const result = await cloudinary.uploader.upload(fileUri, {
+                const result = await cloudinary.uploader.upload(fileUri.content, {
                     folder: "mern_products" // cloudinary folder name
                 });
 
@@ -151,7 +151,7 @@ export const updateProduct = async (req, res) => {
         if(req.files && req.files.length > 0){
             for(let file of req.files){
                 const fileUri = getDataUri(file)
-                const result = await cloudinary.uploader.upload(fileUri, {folder:"mern_products"})
+                const result = await cloudinary.uploader.upload(fileUri.content, {folder:"mern_products"})
                 updateImages.push({
                     url:result.secure_url,
                     public_id:result.public_id
