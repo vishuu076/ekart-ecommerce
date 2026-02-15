@@ -1,11 +1,13 @@
 import DatauriParser from "datauri/parser.js";
 import path from "path";
 
-const parser = new DatauriParser();
-
 const getDataUri = (file) => {
-  const extName = path.extname(file.originalname).toString();
-  return parser.format(extName, file.buffer);
+    // Parser ko yahan function ke andar rakho
+    const parser = new DatauriParser();
+    const extName = path.extname(file.originalname).toString();
+    
+    // Ye line prepare karti hai data
+    return parser.format(extName, file.buffer);
 };
 
 export default getDataUri;
