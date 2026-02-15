@@ -44,7 +44,7 @@ const AdminSales = () => {
     }, [])
 
     useEffect(() => {
-        console.log("FINAL CHART DATA 👉", stats.salesByData)
+        
     }, [stats.salesByData])
 
     return (
