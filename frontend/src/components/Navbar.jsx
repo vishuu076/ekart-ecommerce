@@ -11,7 +11,7 @@ const Navbar = () => {
   const user = useSelector(state => state.user?.user);
   const cart = useSelector(state => state.product?.cart);
 
-  const accessToken = localStorage.getItem("accessToken");
+  const accessToken = localStorage.getItem("token");
   const admin = user?.role === "admin";
   const dispatch = useDispatch();
   const navigate = useNavigate();

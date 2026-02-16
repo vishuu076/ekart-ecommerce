@@ -14,6 +14,9 @@ import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "sonner";
+import { useDispatch } from "react-redux";
+import { setUser } from "@/redux/userSlice";
+
 
 const SignUp = () => {
     const [showPassword, setShowPassword] = React.useState(false);
@@ -26,6 +29,7 @@ const SignUp = () => {
     });
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -48,15 +52,15 @@ const SignUp = () => {
             if (res.data.success) {
                 toast.success(res.data.message);
 
-                // 🔥 IMPORTANT PART (AUTH STATE SET)
-                if (res.data.accessToken) {
-                    localStorage.setItem("token", res.data.accessToken);
-                    localStorage.setItem("user", JSON.stringify(res.data.user));
-                }
+                localStorage.setItem("token", res.data.accessToken);
+                localStorage.setItem("user", JSON.stringify(res.data.user));
 
-                // 🔥 Signup ke baad direct products
+                // 🔥 THIS IS THE KEY LINE
+                dispatch(setUser(res.data.user));
+
                 navigate("/");
             }
+
         } catch (err) {
             console.error(err);
             const errorMsg = err.response?.data?.message || "Signup failed!";
