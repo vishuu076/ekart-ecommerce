@@ -13,8 +13,8 @@ import { singleUpload } from '../middleware/multer.js';
 const router = express.Router();
 
 router.post('/register', register);
-router.get("/verify-email/:token", Emailverify);
-router.post('/reverify', reverify);
+//router.get("/verify-email/:token", Emailverify);
+//router.post('/reverify', reverify);
 router.post('/login', login);
 router.post('/logout', isAuthenticated, logout);
 router.post('/forgot-password', forgotPassword);
