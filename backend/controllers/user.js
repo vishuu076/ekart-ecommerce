@@ -7,10 +7,7 @@ import Session from "../models/sessionmodel.js";
 import cloudinary from "../utils/cloudinary.js";
 
 // ================= REGISTER =====================
-import { User } from "../models/userModel.js";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import { verifyEmail } from "../utils/email.js";
+
 
 export const register = async (req, res) => {
     try {
