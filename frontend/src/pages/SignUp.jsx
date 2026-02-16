@@ -55,7 +55,7 @@ const SignUp = () => {
                 }
 
                 // 🔥 Signup ke baad direct products
-                navigate("/home");
+                navigate("/");
             }
         } catch (err) {
             console.error(err);
