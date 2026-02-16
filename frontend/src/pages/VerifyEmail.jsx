@@ -1,66 +1,44 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Loader2 } from "lucide-react";
 
 const VerifyEmail = () => {
   const { token } = useParams();
-  const [status, setStatus] = useState("verifying"); // 'verifying', 'success', 'error'
   const navigate = useNavigate();
+  const [message, setMessage] = useState("Verifying...");
 
   useEffect(() => {
     const verify = async () => {
       try {
+        // Console log check karne ke liye ki token mil raha hai ya nahi
+        console.log("Token from URL:", token);
+        
         const res = await axios.get(
           `${import.meta.env.VITE_URL}/api/auth/verify-email/${token}`
         );
 
         if (res.data.success) {
-          setStatus("success");
+          setMessage("Email Verified! Redirecting to login...");
           setTimeout(() => navigate("/login"), 3000);
-        } else {
-          setStatus("error");
         }
       } catch (err) {
-        console.error(err);
-        setStatus("error");
+        console.error("Verification Error:", err);
+        setMessage(err.response?.data?.message || "Verification failed. Link might be expired.");
       }
     };
 
-    if (token) verify();
+    if (token) {
+      verify();
+    } else {
+      setMessage("No token found in URL.");
+    }
   }, [token, navigate]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-pink-100 p-4">
-      <div className="bg-white p-8 rounded-2xl shadow-lg text-center max-w-sm w-full">
-        {status === "verifying" && (
-          <div className="flex flex-col items-center gap-4">
-            <Loader2 className="h-10 w-10 animate-spin text-pink-600" />
-            <h2 className="text-xl font-semibold text-gray-700">Verifying your email...</h2>
-          </div>
-        )}
-
-        {status === "success" && (
-          <div className="flex flex-col items-center gap-4">
-            <div className="h-12 w-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-2xl">✓</div>
-            <h2 className="text-xl font-bold text-gray-800">Email Verified!</h2>
-            <p className="text-gray-600">Redirecting you to login page...</p>
-          </div>
-        )}
-
-        {status === "error" && (
-          <div className="flex flex-col items-center gap-4">
-            <div className="h-12 w-12 bg-red-100 text-red-600 rounded-full flex items-center justify-center text-2xl">✕</div>
-            <h2 className="text-xl font-bold text-gray-800">Verification Failed</h2>
-            <p className="text-gray-600">The link might be expired or invalid.</p>
-            <button 
-              onClick={() => navigate("/signup")}
-              className="mt-2 text-pink-600 font-medium hover:underline"
-            >
-              Try signing up again
-            </button>
-          </div>
-        )}
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="p-8 bg-white shadow-md rounded-lg text-center">
+        <h2 className="text-2xl font-bold mb-4">{message}</h2>
+        {message.includes("Verifying") && <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-pink-600 mx-auto"></div>}
       </div>
     </div>
   );
