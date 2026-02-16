@@ -12,9 +12,15 @@ export const verifyEmail = async (token, email) => {
 
   const transporter = nodemailer.createTransport({
     service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true, // Port 465 ke liye true zaroori hai
     auth: {
       user: process.env.MAIL_USER,
       pass: process.env.MAIL_PASS,
+    },
+    tls: {
+      rejectUnauthorized: false // Connection issues se bachne ke liye
     }
   });
 
@@ -42,6 +48,7 @@ export const verifyEmail = async (token, email) => {
     console.log("✅ Verification email sent:", info.response);
   } catch (error) {
     console.error("❌ Error sending email:", error);
-    throw new Error("Failed to send verification email.");
+    // Yahan hum error throw nahi karenge taaki signup process na ruke
+    // throw new Error("Failed to send verification email."); 
   }
 };
