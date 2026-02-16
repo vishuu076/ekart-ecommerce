@@ -13,7 +13,7 @@ export const verifyEmail = async (token, email) => {
       html: `
         <h2>Verify your email</h2>
         <p>Click below to verify:</p>
-        <a href="${process.env.BACKEND_URL}/api/auth/verify-email/${token}">
+        <a href="${process.env.FRONTEND_URL}/verify-email/${token}">
           Verify Email
         </a>
       `,
