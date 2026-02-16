@@ -11,17 +11,11 @@ export const verifyEmail = async (token, email) => {
   }
 
   const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false,
+    service: 'gmail',
     auth: {
       user: process.env.MAIL_USER,
       pass: process.env.MAIL_PASS,
-    },
-    tls: {
-    rejectUnauthorized: false // Render par connection issues se bachne ke liye
-  },
-    family: 4 
+    }
   });
 
   const encodedToken = encodeURIComponent(token);

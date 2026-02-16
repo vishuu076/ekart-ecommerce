@@ -7,6 +7,11 @@ import Session from "../models/sessionmodel.js";
 import cloudinary from "../utils/cloudinary.js";
 
 // ================= REGISTER =====================
+import { User } from "../models/userModel.js";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import { verifyEmail } from "../utils/email.js";
+
 export const register = async (req, res) => {
     try {
         const { firstName, lastName, email, password } = req.body;
@@ -30,17 +35,18 @@ export const register = async (req, res) => {
         });
 
         const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: '10m' });
-
-        try {
-            await verifyEmail(token, email);
-        } catch (err) {
-            console.error("Email send failed:", err.message);
-        }
-
+        
         newUser.token = token;
         await newUser.save();
 
-        res.status(201).json({ success: true, message: "User registered successfully", user: newUser, token });
+        verifyEmail(token, email).catch(err => console.error("Email send failed:", err.message));
+
+        res.status(201).json({ 
+            success: true, 
+            message: "User registered successfully", 
+            user: newUser, 
+            token 
+        });
     }
     catch (error) {
         console.error("REGISTER ERROR 🔥:", error);
@@ -49,11 +55,8 @@ export const register = async (req, res) => {
             message: error.message,
         });
     }
-
 };
 
-
-// ================= EMAIL VERIFY =====================
 export const Emailverify = async (req, res) => {
     try {
         const { token } = req.params;
@@ -88,8 +91,6 @@ export const Emailverify = async (req, res) => {
     }
 };
 
-
-// ================= RE-VERIFY =====================
 export const reverify = async (req, res) => {
     try {
         const { email } = req.body;
@@ -99,7 +100,7 @@ export const reverify = async (req, res) => {
 
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "10m" });
 
-        verifyEmail(token, email);
+        verifyEmail(token, email).catch(err => console.error("Re-verify email failed:", err.message));
 
         user.token = token;
         await user.save();
@@ -107,13 +108,10 @@ export const reverify = async (req, res) => {
         res.status(200).json({ success: true, message: "Verification email sent", token });
 
     } catch (error) {
-        console.error("REGISTER ERROR:", error);
+        console.error("REVERIFY ERROR:", error);
         res.status(500).json({ success: false, message: "Internal Server Error" });
     }
-
 };
-
-
 // ================= LOGIN =====================
 export const login = async (req, res) => {
     try {
