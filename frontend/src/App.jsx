@@ -6,8 +6,6 @@ import Login from "./pages/Login.jsx"
 import ForgotPassword from "./pages/ForgotPassword.jsx"
 import VerifyOtp from "./pages/VerifyOtp.jsx"
 import ResetPassword from "./pages/ResetPassword.jsx"
-import Verify from "./pages/Verify.jsx"
-import VerifyEmail from "./pages/VerifyEmail.jsx"
 import Navbar from "./components/Navbar.jsx"
 import Footer from "./components/Footer.jsx"
 import ProtectedRoute from "./components/ProtectedRoute.jsx"
@@ -57,14 +55,7 @@ const router = createBrowserRouter([
     element: <><ResetPassword /></>
   },
 
-  {
-    path: "/verify",
-    element: <><Verify /></>
-  },
-  {
-    path: "/verify-email/:token",
-    element: <><VerifyEmail /></>
-  },
+ 
   {
     path: "/profile/:userId",
     element: <ProtectedRoute><Navbar /><Profile /></ProtectedRoute>
