@@ -6,30 +6,20 @@ export const verifyEmail = async (token, email) => {
     throw new Error("MAIL_USER or MAIL_PASS environment variables are not set.");
   }
 
-  if (!process.env.FRONTEND_URL) {
-    throw new Error("FRONTEND_URL environment variable is not set.");
-  }
-
   const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true, // Port 465 ke liye true zaroori hai
+    host: "sandbox.smtp.mailtrap.io", // Mailtrap ka host
+    port: 2525,                     // Mailtrap ka port
     auth: {
       user: process.env.MAIL_USER,
       pass: process.env.MAIL_PASS,
     },
-    tls: {
-      rejectUnauthorized: false // Connection issues se bachne ke liye
-    },
-    family: 4
   });
 
   const encodedToken = encodeURIComponent(token);
   const verifyLink = `${process.env.FRONTEND_URL}/verify-email/${encodedToken}`;
 
   const mailConfig = {
-    from: `"Ekart" <${process.env.MAIL_USER}>`,
+    from: `"Ekart" <no-reply@ekart.com>`, // Mailtrap mein 'from' kuch bhi rakh sakte ho
     to: email,
     subject: "Email Verification - Ekart",
     html: `
@@ -46,10 +36,8 @@ export const verifyEmail = async (token, email) => {
 
   try {
     const info = await transporter.sendMail(mailConfig);
-    console.log("✅ Verification email sent:", info.response);
+    console.log("✅ Verification email sent to Mailtrap:", info.response);
   } catch (error) {
-    console.error("❌ Error sending email:", error);
-    // Yahan hum error throw nahi karenge taaki signup process na ruke
-    // throw new Error("Failed to send verification email."); 
-  }
+    console.error("❌ Error sending email:", error.message);
+  }  
 };
