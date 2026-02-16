@@ -3,6 +3,8 @@ import { Resend } from "resend";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const verifyEmail = async (token, email) => {
+  console.log("VERIFY EMAIL FUNCTION CALLED");
+
   await resend.emails.send({
     from: "Ekart <onboarding@resend.dev>",
     to: email,
@@ -15,4 +17,6 @@ export const verifyEmail = async (token, email) => {
       </a>
     `,
   });
+  console.log("EMAIL SEND ATTEMPTED TO:", email);
+
 };
