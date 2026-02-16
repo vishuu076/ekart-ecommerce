@@ -52,7 +52,7 @@ const SignUp = () => {
             if (res.data.success) {
                 toast.success(res.data.message);
 
-                localStorage.setItem("token", res.data.accessToken);
+                localStorage.setItem("accessToken", res.data.accessToken);
                 localStorage.setItem("user", JSON.stringify(res.data.user));
 
                 // 🔥 THIS IS THE KEY LINE
