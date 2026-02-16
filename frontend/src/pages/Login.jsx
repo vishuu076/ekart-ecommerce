@@ -40,15 +40,17 @@ const Login = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await axios.post("https://ekart-ecommerce-i9h9.onrender.com/api/auth/login", formData, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
+      const res = await axios.post(
+        `${import.meta.env.VITE_URL}/api/auth/login`,
+        formData,
+        { headers: { "Content-Type": "application/json" } }
+      );
+
 
       if (res.data.success) {
         dispatch(setUser(res.data.user));
         localStorage.setItem("accessToken", res.data.accessToken);
+        localStorage.setItem("user", JSON.stringify(res.data.user));
         toast.success(res.data.message);
         navigate("/");
       }
@@ -96,7 +98,7 @@ const Login = () => {
                   onChange={handleChange}
                   required
                 />
-                <div 
+                <div
                   className="absolute right-3 top-2.5 cursor-pointer text-gray-700"
                   onClick={() => setShowPassword(!showPassword)}
                 >

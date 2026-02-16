@@ -34,14 +34,12 @@ const Products = () => {
       setLoading(true);
       const res = await axios.get(
         `${import.meta.env.VITE_URL}/api/product/getallproducts`
-
       );
 
       if (res.data.success) {
         const fetchedProducts = res.data.products || [];
         setAllProducts(fetchedProducts);
         dispatch(setProducts(fetchedProducts));
-
 
         const maxPrice = Math.max(
           ...fetchedProducts.map((p) => p.productPrice),
@@ -96,9 +94,10 @@ const Products = () => {
   }, [search, category, brand, priceRange, sortOrder, allProducts, dispatch]);
 
   return (
-    <div className="pt-20 pb-10">
-      <div className="max-w-7xl mx-auto flex gap-7">
-        {/* Sidebar */}
+    <div className="pt-24 pb-12 bg-gray-50">
+      <div className="max-w-7xl mx-auto flex gap-8 px-4">
+
+        {/* SIDEBAR */}
         <FilterSidebar
           search={search}
           setSearch={setSearch}
@@ -111,11 +110,17 @@ const Products = () => {
           allProducts={allProducts}
         />
 
-        {/* Products */}
-        <div className="flex flex-col flex-1">
-          <div className="flex justify-end mb-4">
+        {/* PRODUCTS SECTION */}
+        <div className="flex-1 flex flex-col gap-6">
+
+          {/* TOP BAR */}
+          <div className="flex justify-between items-center">
+            <h1 className="text-xl font-semibold text-gray-800">
+              Showing Products
+            </h1>
+
             <Select onValueChange={(value) => setSortOrder(value)}>
-              <SelectTrigger className="w-[200px]">
+              <SelectTrigger className="w-[200px] bg-white shadow-sm">
                 <SelectValue placeholder="Sort by price" />
               </SelectTrigger>
               <SelectContent>
@@ -131,9 +136,12 @@ const Products = () => {
             </Select>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-7">
+          {/* GRID */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
             {products.length === 0 ? (
-              <p className="text-gray-500">No products found</p>
+              <p className="text-gray-500 col-span-full text-center">
+                No products found
+              </p>
             ) : (
               products.map((product) => (
                 <ProductCard
