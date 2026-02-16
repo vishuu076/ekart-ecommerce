@@ -7,17 +7,17 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "express": "^4.19.2",
-    "cors": "^2.8.6",
-    "dotenv": "^17.2.3",
-    "mongoose": "^9.1.6",
-    "jsonwebtoken": "^9.0.3",
     "bcryptjs": "^3.0.3",
-    "nodemailer": "^8.0.0",
-    "multer": "^2.0.2",
     "cloudinary": "^2.9.0",
+    "cors": "^2.8.6",
+    "datauri": "^4.1.0",
+    "dotenv": "^17.2.3",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.1.6",
+    "multer": "^2.0.2",
+    "nodemailer": "^8.0.0",
     "razorpay": "^2.9.6",
-    "datauri": "^4.1.0"
-
+    "resend": "^6.9.2"
   }
 }
