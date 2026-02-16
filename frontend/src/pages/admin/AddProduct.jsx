@@ -75,8 +75,8 @@ const AddProduct = () => {
 
 
     return (
-        <div className="pl-[250px]  py-20 pr-20 mx-auto px-4 bg-gray-100">
-            <Card>
+        <div className="py-6 bg-gray-50">
+            <Card className="max-w-3xl mx-auto">
                 <CardHeader>
                     <CardTitle>Add Product</CardTitle>
                     <CardDescription>Enter Product detail below</CardDescription>

@@ -134,7 +134,7 @@ const AdminProduct = () => {
     }
 
     return (
-        <div className="pl-[350] py-20 flex flex-col gap-3 min-h-screen bg-gray-100 pl-8 pr-10  ">
+        <div className="py-6 flex flex-col gap-3 min-h-screen bg-gray-100">
             <div className="flex justify-between">
                 <div className="relative bg-white rounded-lg">
                     <Input
@@ -160,7 +160,7 @@ const AdminProduct = () => {
             </div>
             {
                 filteredproducts.map((product, index) => {
-                    return <Card key={index} className='px-4'>
+                    return <Card key={index} className="px-6 py-4">
                         <div className="flex items-center justify-between">
                             <div className="flex gap-2 items-center">
                                 <img src={product.productImg[0].url} alt="" className="w-24 h-24 object-cover" />
