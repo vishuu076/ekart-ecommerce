@@ -4,13 +4,15 @@ import Sidebar from "@/components/Sidebar";
 
 const Dashboard = () => {
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Sidebar (fixed) */}
+    <div className="min-h-screen bg-gray-100">
+      {/* Fixed Sidebar */}
       <Sidebar />
 
-      {/* Main Content */}
-      <div className="md:ml-[300px] pt-20 p-6 overflow-y-auto min-h-screen">
-        <Outlet />
+      {/* Content Area */}
+      <div className="md:ml-[300px] pt-20">
+        <div className="max-w-7xl mx-auto px-6 py-6">
+          <Outlet />
+        </div>
       </div>
     </div>
   );
