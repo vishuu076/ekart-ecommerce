@@ -8,8 +8,8 @@ import { setUser } from "@/redux/userSlice";
 import { toast } from "sonner";
 
 const Navbar = () => {
-  const user = useSelector(state => state.user?.user);
-  const cart = useSelector(state => state.product?.cart);
+  const user = useSelector((state) => state.user?.user);
+  const cart = useSelector((state) => state.product?.cart);
 
   const accessToken = localStorage.getItem("accessToken");
   const admin = user?.role === "admin";
@@ -39,52 +39,63 @@ const Navbar = () => {
   };
 
   return (
-    <header className="bg-pink-50/90 backdrop-blur fixed w-full z-20 border-b border-pink-200 h-20">
-      <div className="max-w-7xl mx-auto flex justify-between items-center px-4 h-full">
-        <div className="h-20 w-[160px] overflow-hidden flex items-center">
+    <header className="fixed top-0 z-20 w-full border-b border-pink-200 bg-pink-50/90 backdrop-blur">
+      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
+        
+        {/* Logo */}
+        <Link to="/" className="flex items-center">
           <img
             src="/Ekart.png"
             alt="Ekart Logo"
-            className="h-full w-full object-cover"
+            className="h-12 w-auto object-contain"
           />
-        </div>
+        </Link>
 
-        <nav className="flex gap-10 justify-between items-center">
-          <ul className="flex gap-7 items-center text-lg font-semibold">
-            <Link to="/"><li>Home</li></Link>
-            <Link to="/products"><li>Products</li></Link>
+        {/* Navigation */}
+        <nav className="flex items-center gap-8">
+          <ul className="flex items-center gap-6 text-[15px] font-medium text-gray-800">
+            <Link to="/" className="hover:text-pink-600">Home</Link>
+            <Link to="/products" className="hover:text-pink-600">Products</Link>
 
             {user && (
-              <Link to={`/profile/${user._id}`}>
-                <li>Hello, {user.firstName}</li>
+              <Link
+                to={`/profile/${user._id}`}
+                className="hover:text-pink-600"
+              >
+                Hello, {user.firstName}
               </Link>
             )}
 
             {admin && (
-              <Link to="/dashboard/sales">
-                <li>Dashboard</li>
+              <Link
+                to="/dashboard/sales"
+                className="hover:text-pink-600"
+              >
+                Dashboard
               </Link>
             )}
           </ul>
 
+          {/* Cart */}
           <Link to="/cart" className="relative">
-            <ShoppingCart />
-            <span className="bg-pink-500 rounded-full absolute text-white -top-3 -right-5 px-2">
+            <ShoppingCart className="h-5 w-5 text-gray-800" />
+            <span className="absolute -right-3 -top-2 rounded-full bg-pink-600 px-2 text-xs text-white">
               {cart?.items?.length || 0}
             </span>
           </Link>
 
+          {/* Auth Button */}
           {user ? (
             <Button
               onClick={logoutHandler}
-              className="bg-pink-600 text-white cursor-pointer"
+              className="bg-pink-600 px-5 text-white hover:bg-pink-700"
             >
               Logout
             </Button>
           ) : (
             <Button
               onClick={() => navigate("/login")}
-              className="bg-gradient-to-tl from-blue-600 to-purple-600 text-white cursor-pointer"
+              className="bg-pink-600 px-5 text-white hover:bg-pink-700"
             >
               Login
             </Button>

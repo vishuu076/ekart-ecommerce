@@ -29,68 +29,81 @@ const FilterSidebar = ({
   };
 
   return (
-    <div className="bg-gray-100 mt-10 p-4 rounded-md h-max hidden md:block w-64">
+    <aside className="hidden md:block w-64 rounded-lg border bg-white p-5 shadow-sm">
+      
       {/* Search */}
-      <Input
-        placeholder="search..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        className="bg-white"
-      />
+      <div className="space-y-2">
+        <h3 className="text-sm font-semibold text-gray-800">Search</h3>
+        <Input
+          placeholder="Search products..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </div>
 
       {/* Category */}
-      <h1 className="mt-5 font-semibold text-xl">Category</h1>
-      <div className="flex flex-col gap-2 mt-3">
-        {categories.map((item, index) => (
-          <label key={index} className="flex gap-2 items-center">
-            <input
-              type="radio"
-              checked={category === item}
-              onChange={() => setCategory(item)}
-            />
-            {item}
-          </label>
-        ))}
+      <div className="mt-6 space-y-3">
+        <h3 className="text-sm font-semibold text-gray-800">Category</h3>
+        <div className="space-y-2">
+          {categories.map((item, index) => (
+            <label
+              key={index}
+              className="flex cursor-pointer items-center gap-2 text-sm text-gray-700"
+            >
+              <input
+                type="radio"
+                checked={category === item}
+                onChange={() => setCategory(item)}
+              />
+              {item}
+            </label>
+          ))}
+        </div>
       </div>
 
       {/* Brand */}
-      <h1 className="mt-5 font-semibold text-xl">Brands</h1>
-      <select
-        className="bg-white w-full p-2 border rounded-md"
-        value={brand}
-        onChange={(e) => setBrand(e.target.value)}
-      >
-        {brands.map((item, index) => (
-          <option key={index} value={item}>
-            {item.toUpperCase()}
-          </option>
-        ))}
-      </select>
+      <div className="mt-6 space-y-2">
+        <h3 className="text-sm font-semibold text-gray-800">Brand</h3>
+        <select
+          className="w-full rounded-md border px-3 py-2 text-sm focus:outline-none"
+          value={brand}
+          onChange={(e) => setBrand(e.target.value)}
+        >
+          {brands.map((item, index) => (
+            <option key={index} value={item}>
+              {item.toUpperCase()}
+            </option>
+          ))}
+        </select>
+      </div>
 
       {/* Price Range */}
-      <h1 className="mt-5 font-semibold text-xl">Price Range</h1>
-      <p className="text-sm mb-2">
-        ₹{priceRange[0]} - ₹{priceRange[1]}
-      </p>
+      <div className="mt-6 space-y-2">
+        <h3 className="text-sm font-semibold text-gray-800">Price Range</h3>
+        <p className="text-sm text-gray-600">
+          ₹{priceRange[0]} – ₹{priceRange[1]}
+        </p>
 
-      <input
-        type="range"
-        min={0}
-        max={maxPrice}
-        value={priceRange[1]}
-        onChange={(e) =>
-          setPriceRange([priceRange[0], Number(e.target.value)])
-        }
-        className="w-full"
-      />
+        <input
+          type="range"
+          min={0}
+          max={maxPrice}
+          value={priceRange[1]}
+          onChange={(e) =>
+            setPriceRange([priceRange[0], Number(e.target.value)])
+          }
+          className="w-full accent-pink-600"
+        />
+      </div>
 
+      {/* Reset */}
       <Button
         onClick={resetFilters}
-        className="bg-pink-600 text-white mt-5 w-full"
+        className="mt-6 w-full bg-pink-600 text-white hover:bg-pink-700"
       >
         Reset Filters
       </Button>
-    </div>
+    </aside>
   );
 };
 

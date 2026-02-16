@@ -1,74 +1,114 @@
 import { Input } from "@/components/ui/input";
 import axios from "axios";
 import { Edit, Eye, Search } from "lucide-react";
-import React, { use, useEffect } from "react";
-import userLogo from "../../assets/user.jpg"
+import React, { useEffect, useState } from "react";
+import userLogo from "../../assets/user.jpg";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 
 const AdminUsers = () => {
-    const [users, setUsers] = React.useState([])
-    const [searchTerm, setSeachTerm] = React.useState("")
-    const navigate =  useNavigate()
+  const [users, setUsers] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
 
-
-    const getAllUsers = async () => {
-        const accessToken = localStorage.getItem("accessToken")
-        try {
-            const res = await axios.get(`${import.meta.env.VITE_URL}/api/auth/all-users`, {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`
-                }
-            })
-            if (res.data.success) {
-                setUsers(res.data.users)
-            }
-
-        } catch (error) {
-            console.log(error)
+  const getAllUsers = async () => {
+    const accessToken = localStorage.getItem("accessToken");
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_URL}/api/auth/all-users`,
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
         }
-
+      );
+      if (res.data.success) {
+        setUsers(res.data.users);
+      }
+    } catch (error) {
+      console.error("Failed to fetch users", error);
     }
+  };
 
-    const filteredUsers = users.filter(user=>
-        `${user.firstName} ${user.lastNamae}`.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.email.toLowerCase().includes(searchTerm.toLowerCase())
-    )
+  const filteredUsers = users.filter(
+    (user) =>
+      `${user.firstName} ${user.lastName}`
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-    useEffect(() => {
-        getAllUsers()
-    }, [])
+  useEffect(() => {
+    getAllUsers();
+  }, []);
 
+  return (
+    <div className="flex flex-col gap-6">
+      {/* Header */}
+      <div>
+        <h1 className="text-2xl font-semibold text-gray-800">
+          User Management
+        </h1>
+        <p className="text-sm text-gray-500">
+          View and manage registered users
+        </p>
+      </div>
 
-    return (
-        <div className="pl-[50px] py-20 pr-20 mx-auto px-4">
-            <h1 className="font-bold text-2xl ">User Management</h1>
-            <p>View and manage registerd users</p>
-            <div className="flex relative w-[300px] mt-6">
-                <Search className="absolute left-2 top-1 text-gray-600 w-5" />
-                <Input value={searchTerm} onChange={(e)=>setSeachTerm(e.target.value)} className='pl-10' placeholder="Search users..." />
+      {/* Search */}
+      <div className="relative w-full sm:max-w-sm">
+        <Search className="absolute left-3 top-2.5 w-4 h-4 text-gray-400" />
+        <Input
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="pl-9 bg-white"
+          placeholder="Search users..."
+        />
+      </div>
+
+      {/* Users Grid */}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {filteredUsers.map((user) => (
+          <div
+            key={user._id}
+            className="bg-white border rounded-lg p-4 flex flex-col gap-4"
+          >
+            <div className="flex items-center gap-3">
+              <img
+                src={user.profilePic || userLogo}
+                className="w-14 h-14 rounded-full object-cover border"
+                alt="user"
+              />
+              <div>
+                <h2 className="font-semibold text-gray-800">
+                  {user.firstName} {user.lastName}
+                </h2>
+                <p className="text-sm text-gray-500">{user.email}</p>
+              </div>
             </div>
-            <div className="grid grid-cols-3 gap-7 mt-7">
-                {
-                    filteredUsers.map((user, index) => {
-                        return <div  key={index} className="bg-pink-100 p-5 rounded-lg">
-                            <div className="flex items-center gap-2">
-                                <img src={user?.profilePic || userLogo} alt="" className="rounded-full w-16 aspect-square object-cover border border-pink-600" />
-                                <div>
-                                    <h1 className="font-semibold" >{user?.firstName} {user?.lastName}</h1>
-                                    <h3>{user?.email}</h3>
-                                </div>
-                            </div>
-                            <div className="flex gap-3 mt-3">
-                                <Button className='cursor-pointer' onClick={()=>navigate(`/dashboard/users/${user?._id}`)} variant='outline'><Edit/>Edit</Button>
-                                <Button onClick={()=>navigate(`/dashboard/users/orders/${user?._id}`)} className='cursor-pointer'><Eye/>Show Order</Button>
-                            </div>
-                        </div>
-                    })
+
+            <div className="flex gap-3">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => navigate(`/dashboard/users/${user._id}`)}
+              >
+                <Edit className="w-4 h-4 mr-1" />
+                Edit
+              </Button>
+
+              <Button
+                size="sm"
+                onClick={() =>
+                  navigate(`/dashboard/users/orders/${user._id}`)
                 }
+              >
+                <Eye className="w-4 h-4 mr-1" />
+                Orders
+              </Button>
             </div>
-        </div>
-    )
-}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
-export default AdminUsers
+export default AdminUsers;

@@ -2,27 +2,46 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 
-
 const Hero = () => {
-    const navigate = useNavigate()
-    return (
-       <section className="bg-gradient-to-r from-blue-500 to-purple-600 text-white py-16">
-        <div className="max-w-7xl mx-auto px-4">
-            <div className="grid md:grid-cols-2 gap-8 items-center">
-                <div className>
-                    <h1 className="text-4xl md:text-6xl font-bold mb-4">Latest Electronics at Best Prices</h1>
-                    <p className="text-lg mb-6">Discover a wide range of electronics, from smartphones to laptops, all at unbeatable prices. Shop now and experience the best in technology!</p>
-                    <div className="flex flex-col sm:flex-row gap-4">
-                        <Button  onClick={() => navigate("/products")} className="bg-white text-blue-600 hover:bg-gray-100">Shop Now</Button>
-                    </div>
-                </div> 
-                 <div className="relative">
-                <img src="/Hero.png" alt="Hero" width={500} height={400}  className="rounded-lg shadow-2xl"/>
-            </div> 
-            </div>
+  const navigate = useNavigate();
+
+  return (
+    <section className="bg-gradient-to-r from-pink-50 via-white to-pink-100 py-16">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="grid items-center gap-10 md:grid-cols-2">
+          
+          {/* Text */}
+          <div className="space-y-6">
+            <h1 className="text-3xl font-bold leading-tight text-gray-900 sm:text-4xl md:text-5xl">
+              Latest Electronics at{" "}
+              <span className="text-pink-600">Best Prices</span>
+            </h1>
+
+            <p className="max-w-xl text-base text-gray-600 sm:text-lg">
+              Discover top-quality electronics including smartphones, laptops,
+              and accessories — all at competitive prices you’ll love.
+            </p>
+
+            <Button
+              onClick={() => navigate("/products")}
+              className="bg-pink-600 px-6 py-3 text-white hover:bg-pink-700"
+            >
+              Shop Now
+            </Button>
+          </div>
+
+          {/* Image */}
+          <div className="flex justify-center md:justify-end">
+            <img
+              src="/Hero.png"
+              alt="Electronics Banner"
+              className="w-full max-w-md rounded-xl object-contain shadow-lg"
+            />
+          </div>
         </div>
-       </section>
-    );
-}   
+      </div>
+    </section>
+  );
+};
 
 export default Hero;
