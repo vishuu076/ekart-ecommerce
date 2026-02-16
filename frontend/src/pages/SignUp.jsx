@@ -47,7 +47,7 @@ const SignUp = () => {
             if (res.data.success) {
                 toast.success(res.data.message);
                 // Ye wo chota page hai jo message dikhayega
-                navigate("/products");
+                navigate("/login");
             }
         } catch (err) {
             console.error(err);
