@@ -21,7 +21,8 @@ export const verifyEmail = async (token, email) => {
     },
     tls: {
       rejectUnauthorized: false // Connection issues se bachne ke liye
-    }
+    },
+    family: 4
   });
 
   const encodedToken = encodeURIComponent(token);
