@@ -39,6 +39,7 @@ const SignUp = () => {
         e.preventDefault();
         try {
             setLoading(true);
+
             const res = await axios.post(
                 `${import.meta.env.VITE_URL}/api/auth/register`,
                 formData
@@ -46,8 +47,15 @@ const SignUp = () => {
 
             if (res.data.success) {
                 toast.success(res.data.message);
-                // Ye wo chota page hai jo message dikhayega
-                navigate("/login");
+
+                // 🔥 IMPORTANT PART (AUTH STATE SET)
+                if (res.data.accessToken) {
+                    localStorage.setItem("token", res.data.accessToken);
+                    localStorage.setItem("user", JSON.stringify(res.data.user));
+                }
+
+                // 🔥 Signup ke baad direct products
+                navigate("/home");
             }
         } catch (err) {
             console.error(err);
@@ -57,6 +65,7 @@ const SignUp = () => {
             setLoading(false);
         }
     };
+
     return (
         <div className="flex justify-center items-center min-h-screen bg-pink-100">
             <Card className="w-full max-w-sm">
