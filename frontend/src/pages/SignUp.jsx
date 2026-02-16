@@ -41,16 +41,12 @@ const SignUp = () => {
             setLoading(true);
             const res = await axios.post(
                 `${import.meta.env.VITE_URL}/api/auth/register`,
-                formData,
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                }
+                formData
             );
 
             if (res.data.success) {
                 toast.success(res.data.message);
+                // Ye wo chota page hai jo message dikhayega
                 navigate("/verify");
             }
         } catch (err) {
@@ -61,7 +57,6 @@ const SignUp = () => {
             setLoading(false);
         }
     };
-
     return (
         <div className="flex justify-center items-center min-h-screen bg-pink-100">
             <Card className="w-full max-w-sm">
@@ -125,7 +120,7 @@ const SignUp = () => {
                                     onChange={handleChange}
                                     required
                                 />
-                                <div 
+                                <div
                                     className="absolute right-3 top-2.5 cursor-pointer text-gray-700"
                                     onClick={() => setShowPassword(!showPassword)}
                                 >
@@ -149,8 +144,8 @@ const SignUp = () => {
                     </Button>
                     <p className="text-gray-700 text-sm">
                         Already have an account?{" "}
-                        <span 
-                            onClick={() => navigate("/login")} 
+                        <span
+                            onClick={() => navigate("/login")}
                             className="hover:underline cursor-pointer text-pink-800 font-medium"
                         >
                             Login
