@@ -28,21 +28,21 @@ export const register = async (req, res) => {
             firstName,
             lastName,
             email,
-            password: hashedPassword
+            password: hashedPassword,
+            isVerified: true
         });
 
         const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: '10m' });
-        
+
         newUser.token = token;
         await newUser.save();
 
-        verifyEmail(token, email).catch(err => console.error("Email send failed:", err.message));
 
-        res.status(201).json({ 
-            success: true, 
-            message: "User registered successfully", 
-            user: newUser, 
-            token 
+        res.status(201).json({
+            success: true,
+            message: "User registered successfully",
+            user: newUser,
+            token
         });
     }
     catch (error) {
@@ -125,8 +125,6 @@ export const login = async (req, res) => {
         if (!isPasswordValid)
             return res.status(401).json({ success: false, message: "Invalid password" });
 
-        if (!user.isVerified)
-            return res.status(401).json({ success: false, message: "Email not verified" });
 
         const accessToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "10d" });
         const refreshToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "30d" });
