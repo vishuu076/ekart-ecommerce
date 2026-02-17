@@ -56,7 +56,7 @@ const Navbar = () => {
           <img
             src="/Ekart.png"
             alt="Ekart Logo"
-            className="h-16 w-auto object-contain"
+            className="h-18 w-auto object-contain"
           />
         </Link>
 
