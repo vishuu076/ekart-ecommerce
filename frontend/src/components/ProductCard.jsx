@@ -9,12 +9,21 @@ import { useNavigate } from "react-router-dom";
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const accessToken = localStorage.getItem("accessToken");
   const [adding, setAdding] = useState(false);
 
   const addToCart = async (e) => {
-    e.stopPropagation(); // 🔴 VERY IMPORTANT
+    e.stopPropagation();
     if (adding) return;
+
+    // ✅ TOKEN ALWAYS FETCH HERE
+    const accessToken = localStorage.getItem("accessToken");
+
+    if (!accessToken) {
+      toast.error("Please login to add items to cart");
+      navigate("/login");
+      return;
+    }
+
     setAdding(true);
 
     try {
@@ -22,7 +31,9 @@ const ProductCard = ({ product }) => {
         `${import.meta.env.VITE_URL}/api/cart/add`,
         { productId: product._id },
         {
-          headers: { Authorization: `Bearer ${accessToken}` },
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
         }
       );
 

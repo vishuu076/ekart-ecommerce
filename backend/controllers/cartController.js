@@ -16,13 +16,14 @@ export const getCart = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
-      export const addToCart = async (req, res) => {
+
+  export const addToCart = async (req, res) => {
   try {
     const userId = req.id;
     const { productId } = req.body;
 
     
-    // CHECK 1: Is the User Logged In?
+    
     if (!userId) {
       console.log("ERROR: User ID is missing. Check Auth Middleware.");
       return res.status(401).json({ success: false, message: "User not authorized" });
@@ -36,24 +37,24 @@ export const getCart = async (req, res) => {
       return res.status(404).json({ success: false, message: "Product not found" });
     }
 
-    // CHECK 3: Does the product have a price?
+  
     if (product.productPrice === undefined) {
         console.log("ERROR: Product has no price!");
         return res.status(400).json({ success: false, message: "Product data is incomplete" });
     }
 
-    // --- LOGIC STARTS HERE ---
+
     let cart = await Cart.findOne({ userId });
 
     if (!cart) {
-      // Create new cart
+    
       cart = new Cart({
         userId,
         items: [{ productId, quantity: 1, price: product.productPrice }],
         totalPrice: product.productPrice,
       });
     } else {
-      // Update existing cart
+    
       const itemIndex = cart.items.findIndex(
         (item) => item.productId.toString() === productId
       );
@@ -83,7 +84,6 @@ export const getCart = async (req, res) => {
     res.status(200).json({ success: true, message: "Product added", cart });
 
   } catch (error) {
-    // THIS IS THE IMPORTANT PART
     console.error("🔥 CRASH REPORT 🔥");
     console.error(error); // This prints the specific line number in your terminal
     res.status(500).json({ success: false, message: error.message });
