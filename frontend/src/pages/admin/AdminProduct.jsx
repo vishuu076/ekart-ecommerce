@@ -118,7 +118,7 @@ const AdminProduct = () => {
     const deleteProductHandler = async (productId) => {
         try {
             const remainingProducts = products.filter(async (product) => {
-                const res = await axios.delete(`http://localhost:8000/api/product/delete/${productId}`, {
+                const res = await axios.delete(`${import.meta.env.VITE_URL}/api/product/delete/${productId}`, {
                     headers: {
                         Authorization: `Bearer ${accessToken}`
                     }

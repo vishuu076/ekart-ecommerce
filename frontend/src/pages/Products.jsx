@@ -33,7 +33,7 @@ const Products = () => {
     try {
       setLoading(true);
       const res = await axios.get(
-        "http://localhost:8000/api/product/getallproducts"
+        `${import.meta.env.VITE_URL}/api/product/all`
       );
 
       if (res.data.success) {

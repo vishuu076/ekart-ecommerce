@@ -17,7 +17,7 @@ const VerifyOtp = () => {
         try {
             setLoading(true);
             const res = await axios.post(
-                `http://localhost:8000/api/auth/verify-otp/${email}`,
+                `${import.meta.env.VITE_URL}/api/auth/verify-otp/${email}`,
                 { otp: otp.toString().trim() }
             );
 

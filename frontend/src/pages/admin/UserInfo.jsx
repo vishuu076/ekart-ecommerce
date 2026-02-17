@@ -73,7 +73,7 @@ const UserInfo = () => {
     const getUserDetails = async () => {
         try {
             const accessToken = localStorage.getItem("accessToken")
-            const res = await axios.get(`http://localhost:8000/api/auth/get-user/${userId}`, {
+            const res = await axios.get(`${import.meta.env.VITE_URL}/api/auth/get-user/${userId}`, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 }
