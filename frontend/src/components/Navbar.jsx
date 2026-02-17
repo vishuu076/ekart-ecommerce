@@ -28,7 +28,7 @@ const Navbar = () => {
         }
       );
 
-      // 🔑 MOST IMPORTANT PART
+    
       localStorage.removeItem("accessToken");
       localStorage.removeItem("user");
 
@@ -38,7 +38,7 @@ const Navbar = () => {
     } catch (error) {
       console.error("Logout failed:", error);
 
-      // ⚠️ Even if backend fails, frontend MUST logout
+      
       localStorage.removeItem("accessToken");
       localStorage.removeItem("user");
       dispatch(setUser(null));
@@ -56,7 +56,7 @@ const Navbar = () => {
           <img
             src="/Ekart.png"
             alt="Ekart Logo"
-            className="h-12 w-auto object-contain"
+            className="h-16 w-auto object-contain"
           />
         </Link>
 
