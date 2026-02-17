@@ -140,13 +140,15 @@ const router = createBrowserRouter([
 function App() {
   const dispatch = useDispatch();
 
-  // 🔥 PAGE REFRESH FIX (Redux rehydrate)
   useEffect(() => {
     const savedUser = localStorage.getItem("user");
-    if (savedUser) {
+    const token = localStorage.getItem("accessToken");
+
+    if (savedUser && token) {
       dispatch(setUser(JSON.parse(savedUser)));
     }
   }, [dispatch]);
+
 
   return (
     <>

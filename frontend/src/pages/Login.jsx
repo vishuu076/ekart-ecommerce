@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "sonner";
 import { useDispatch } from "react-redux";
-import { setUser } from "../redux/userSlice.js";
+import { setUser } from "../redux/userSlice";
 
 const Login = () => {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -30,38 +30,40 @@ const Login = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
+    setFormData((prev) => ({
+      ...prev,
       [name]: value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
     try {
-      setLoading(true);
       const res = await axios.post(
         `${import.meta.env.VITE_URL}/api/auth/login`,
         formData,
         { headers: { "Content-Type": "application/json" } }
       );
 
-
       if (res.data.success) {
-        dispatch(setUser(res.data.user));
+        // ✅ Save auth properly
         localStorage.setItem("accessToken", res.data.accessToken);
         localStorage.setItem("user", JSON.stringify(res.data.user));
-        toast.success(res.data.message);
+
+        dispatch(setUser(res.data.user));
+        toast.success(res.data.message || "Login successful");
         navigate("/");
       }
     } catch (err) {
-      console.error(err);
-      const msg = err.response?.data?.message || "Invalid Email or Password";
+      const msg =
+        err.response?.data?.message || "Invalid email or password";
       toast.error(msg);
     } finally {
       setLoading(false);
     }
-  }; // <--- YE BRACKET SAHI JAGAH LAGAYA HAI AB
+  };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-pink-100">
@@ -69,7 +71,7 @@ const Login = () => {
         <CardHeader>
           <CardTitle>Login to your account</CardTitle>
           <CardDescription>
-            Enter given details to login to your account
+            Enter your details to login
           </CardDescription>
         </CardHeader>
 
@@ -86,40 +88,43 @@ const Login = () => {
               required
             />
 
-            <div className="grid gap-2">
-              <Label htmlFor="password">Password</Label>
-              <div className="relative">
-                <Input
-                  id="password"
-                  name="password"
-                  placeholder="Enter your password"
-                  type={showPassword ? "text" : "password"}
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                />
-                <div
-                  className="absolute right-3 top-2.5 cursor-pointer text-gray-700"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                </div>
-              </div>
-              <p
-                onClick={() => navigate("/forgot-password")}
-                className="text-sm text-pink-700 cursor-pointer hover:underline text-center"
+            <Label htmlFor="password">Password</Label>
+            <div className="relative">
+              <Input
+                id="password"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+              <div
+                className="absolute right-3 top-2.5 cursor-pointer"
+                onClick={() => setShowPassword(!showPassword)}
               >
-                Forgot password?
-              </p>
+                {showPassword ? (
+                  <EyeOff className="w-5 h-5" />
+                ) : (
+                  <Eye className="w-5 h-5" />
+                )}
+              </div>
             </div>
+
+            <p
+              onClick={() => navigate("/forgot-password")}
+              className="text-sm text-pink-700 cursor-pointer hover:underline text-center"
+            >
+              Forgot password?
+            </p>
           </div>
         </CardContent>
 
         <CardFooter className="flex-col gap-2">
           <Button
             onClick={handleSubmit}
-            className="w-full cursor-pointer bg-pink-600 hover:bg-pink-500"
             disabled={loading}
+            className="w-full bg-pink-600 hover:bg-pink-500"
           >
             {loading ? (
               <>
@@ -132,10 +137,10 @@ const Login = () => {
           </Button>
 
           <p className="text-gray-700 text-sm">
-            Don't have an account?{" "}
+            Don’t have an account?{" "}
             <span
               onClick={() => navigate("/signup")}
-              className="hover:underline cursor-pointer text-pink-800 font-bold"
+              className="cursor-pointer text-pink-800 font-bold hover:underline"
             >
               Signup
             </span>

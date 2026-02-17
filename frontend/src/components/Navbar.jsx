@@ -18,7 +18,7 @@ const Navbar = () => {
 
   const logoutHandler = async () => {
     try {
-      const res = await axios.post(
+      await axios.post(
         `${import.meta.env.VITE_URL}/api/auth/logout`,
         {},
         {
@@ -28,20 +28,29 @@ const Navbar = () => {
         }
       );
 
-      if (res.data.success) {
-        dispatch(setUser(null));
-        toast.success(res.data.message);
-        navigate("/login");
-      }
+      // 🔑 MOST IMPORTANT PART
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("user");
+
+      dispatch(setUser(null));
+      toast.success("Logged out successfully");
+      navigate("/login");
     } catch (error) {
       console.error("Logout failed:", error);
+
+      // ⚠️ Even if backend fails, frontend MUST logout
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("user");
+      dispatch(setUser(null));
+      navigate("/login");
     }
   };
+
 
   return (
     <header className="fixed top-0 z-20 w-full border-b border-pink-200 bg-pink-50/90 backdrop-blur">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
-        
+
         {/* Logo */}
         <Link to="/" className="flex items-center">
           <img
