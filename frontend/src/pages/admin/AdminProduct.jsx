@@ -114,23 +114,30 @@ const AdminProduct = () => {
   };
 
   const deleteProductHandler = async (productId) => {
+    if (!productId) return toast.error("Invalid product ID");
+
     try {
+      console.log("Deleting:", productId);
+
       const res = await axios.delete(
         `${import.meta.env.VITE_URL}/api/product/delete/${productId}`,
         { headers: { Authorization: `Bearer ${accessToken}` } }
       );
+
       if (res.data.success) {
+        dispatch(setProducts(products.filter(p => p._id !== productId)));
         toast.success(res.data.message);
-        dispatch(setProducts(products.filter((p) => p._id !== productId)));
       }
-    } catch {
+    } catch (error) {
+      console.error(error);
       toast.error("Failed to delete product");
     }
   };
 
+
   return (
     <div className="flex flex-col gap-6">
-      
+
       <div className="flex flex-col sm:flex-row gap-4 justify-between">
         <div className="relative w-full sm:max-w-sm">
           <Input
