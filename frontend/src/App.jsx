@@ -72,7 +72,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/products/:id",
+    path: "/product/:id",
     element: (
       <>
         <Navbar />
