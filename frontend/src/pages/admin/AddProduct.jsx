@@ -165,7 +165,7 @@ const AddProduct = () => {
           <Button
             onClick={submitHandler}
             disabled={loading}
-            className="w-full bg-pink-600 hover:bg-pink-700"
+            className="w-full bg-pink-600 hover:bg-pink-700 cursor-pointer"
           >
             {loading ? (
               <span className="flex items-center gap-2">

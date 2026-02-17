@@ -11,7 +11,7 @@ const ProductCard = ({ product }) => {
   const [adding, setAdding] = useState(false);
 
   const addToCart = async () => {
-    if (adding) return; // 🚫 double click block
+    if (adding) return; 
     setAdding(true);
 
     try {
@@ -47,7 +47,7 @@ const ProductCard = ({ product }) => {
       <Button
         onClick={addToCart}
         disabled={adding}
-        className="w-full mt-2 bg-pink-600"
+        className="w-full mt-2 bg-pink-600 cursor-pointer"
       >
         {adding ? "Adding..." : "Add to Cart"}
       </Button>

@@ -130,7 +130,7 @@ const AdminProduct = () => {
 
   return (
     <div className="flex flex-col gap-6">
-      {/* Top Controls */}
+      
       <div className="flex flex-col sm:flex-row gap-4 justify-between">
         <div className="relative w-full sm:max-w-sm">
           <Input

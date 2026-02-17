@@ -82,7 +82,7 @@ const Cart = () => {
         <p className="text-gray-500">Start adding products</p>
         <Button
           onClick={() => navigate("/products")}
-          className="mt-6 bg-pink-600"
+          className="mt-6 bg-pink-600 cursor-pointer"
         >
           Start Shopping
         </Button>
@@ -169,12 +169,12 @@ const Cart = () => {
             </div>
 
             <Button
-              className="w-full bg-pink-600 mt-4"
+              className="w-full bg-pink-600 mt-4 cursor-pointer"
               onClick={() => navigate("/address")}
             >
               PLACE ORDER
             </Button>
-            <Button variant="outline" className="w-full">
+            <Button variant="outline" className="w-full cursor-pointer">
               <Link to="/products">Continue Shopping</Link>
             </Button>
           </CardContent>

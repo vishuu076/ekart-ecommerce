@@ -63,7 +63,7 @@ const AdminUsers = () => {
         />
       </div>
 
-      {/* Users Grid */}
+      
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {filteredUsers.map((user) => (
           <div
@@ -85,16 +85,17 @@ const AdminUsers = () => {
             </div>
 
             <div className="flex gap-3">
-              <Button
+              <Button 
                 variant="outline"
                 size="sm"
+                className="cursor-pointer"
                 onClick={() => navigate(`/dashboard/users/${user._id}`)}
               >
                 <Edit className="w-4 h-4 mr-1" />
                 Edit
               </Button>
 
-              <Button
+              <Button className="cursor-pointer" variant="outline"
                 size="sm"
                 onClick={() =>
                   navigate(`/dashboard/users/orders/${user._id}`)

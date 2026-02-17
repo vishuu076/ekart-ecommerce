@@ -98,7 +98,7 @@ const UserInfo = () => {
     <div className="max-w-4xl mx-auto flex flex-col gap-6">
       {/* Header */}
       <div className="flex items-center gap-4">
-        <Button variant="outline" size="icon" onClick={() => navigate(-1)}>
+        <Button variant="outline" className="cursor-pointer" size="icon" onClick={() => navigate(-1)}>
           <ArrowLeft />
         </Button>
         <h1 className="text-xl font-semibold text-gray-800">
@@ -194,7 +194,7 @@ const UserInfo = () => {
             </RadioGroup>
           </div>
 
-          <Button className="bg-pink-600 hover:bg-pink-700 w-full">
+          <Button className="bg-pink-600 hover:bg-pink-700 w-full cursor-pointer">
             Update Profile
           </Button>
         </form>
