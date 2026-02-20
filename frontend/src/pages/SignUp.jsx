@@ -55,7 +55,7 @@ const SignUp = () => {
                 localStorage.setItem("accessToken", res.data.accessToken);
                 localStorage.setItem("user", JSON.stringify(res.data.user));
 
-                // 🔥 THIS IS THE KEY LINE
+                
                 dispatch(setUser(res.data.user));
 
                 navigate("/");

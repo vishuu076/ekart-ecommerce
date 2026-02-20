@@ -46,7 +46,7 @@ export const register = async (req, res) => {
         });
     }
     catch (error) {
-        console.error("REGISTER ERROR 🔥:", error);
+        console.error("REGISTER ERROR :", error);
         res.status(500).json({
             success: false,
             message: error.message,
