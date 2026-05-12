@@ -29,7 +29,7 @@ export const register = async (req, res) => {
             lastName,
             email,
             password: hashedPassword,
-            isVerified: true
+            isVerified: false // Set to false for mandatory verification
         });
 
         const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: '10m' });
@@ -37,10 +37,12 @@ export const register = async (req, res) => {
         newUser.token = token;
         await newUser.save();
 
+        // Send verification email
+        await verifyEmail(token, email);
 
         res.status(201).json({
             success: true,
-            message: "User registered successfully",
+            message: "User registered successfully. Please verify your email.",
             user: newUser,
             token
         });
@@ -125,6 +127,10 @@ export const login = async (req, res) => {
         if (!isPasswordValid)
             return res.status(401).json({ success: false, message: "Invalid password" });
 
+        if (!user.isVerified) {
+            return res.status(403).json({ success: false, message: "Please verify your email first" });
+        }
+
 
         const accessToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "10d" });
         const refreshToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "30d" });
@@ -187,7 +193,8 @@ export const forgotPassword = async (req, res) => {
         res.status(200).json({ success: true, message: "OTP sent to email" });
 
     } catch (error) {
-        res.status(500).json({ success: false, message: "Internal Server Error" });
+        console.error("FORGOT PASSWORD ERROR:", error);
+        res.status(500).json({ success: false, message: error.message || "Internal Server Error" });
     }
 };
 
@@ -207,10 +214,8 @@ export const verifyOTP = async (req, res) => {
         if (user.otpExpiry < Date.now())
             return res.status(400).json({ success: false, message: "OTP expired" });
 
-        if (user.otp !== otp)
-            return res.status(400).json({ success: false, message: "Invalid OTP" });
-
         user.otp = null;
+
         user.otpExpiry = null;
         await user.save();
 

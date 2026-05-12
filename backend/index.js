@@ -1,5 +1,4 @@
-import dotenv from "dotenv";
-dotenv.config();
+import 'dotenv/config';
 
 import express from "express";
 import cors from "cors";
@@ -40,7 +39,6 @@ app.use((err, req, res, next) => {
 });
 
 
-// Start server
 app.listen(PORT, () => {
   connectDB();
   console.log(`Server running on port ${PORT}`);

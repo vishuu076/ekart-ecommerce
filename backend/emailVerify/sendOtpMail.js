@@ -1,31 +1,10 @@
-import nodemailer from "nodemailer";
-import "dotenv/config";
+import { sendMail } from "../utils/mailer.js";
 
 export const sendOTPEmail = async (email, otp) => {
-    try {
-        const transporter = nodemailer.createTransport({
-            host: "smtp.gmail.com",
-            port: 587,
-            secure: false, // ❗ false
-            auth: {
-                user: process.env.MAIL_USER,
-                pass: process.env.MAIL_PASS,
-            },
-            tls: {
-                rejectUnauthorized: false,
-            },
-        });
-
-        const mailConfig = {
-            from: `"Ekart" <${process.env.MAIL_USER}>`,
-            to: email,
-            subject: "OTP Verification - Ekart",
-            text: `Your OTP for password reset is: ${otp}`,
-        };
-
-        await transporter.sendMail(mailConfig); // 🔥 IMPORTANT
-        console.log("✅ OTP sent to:", email);
-    } catch (error) {
-        console.error("❌ OTP email error:", error.message);
-    }
+    await sendMail({
+        email,
+        subject: "Your OTP - Ekart",
+        text: `Your OTP for password reset is: ${otp}\n\nThis OTP is valid for 10 minutes. Do not share it with anyone.`,
+        html: `<p>Your OTP for password reset is: <strong>${otp}</strong></p><p>This OTP is valid for <strong>10 minutes</strong>. Do not share it with anyone.</p>`,
+    });
 };
