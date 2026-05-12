@@ -8,6 +8,8 @@ import Login from "./pages/Login.jsx";
 import ForgotPassword from "./pages/ForgotPassword.jsx";
 import VerifyOtp from "./pages/VerifyOtp.jsx";
 import ResetPassword from "./pages/ResetPassword.jsx";
+import VerifyEmail from "./pages/VerifyEmail.jsx";
+import CheckEmail from "./pages/CheckEmail.jsx";
 
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
@@ -52,6 +54,8 @@ const router = createBrowserRouter([
   { path: "/forgot-password", element: <ForgotPassword /> },
   { path: "/verify-otp/:email", element: <VerifyOtp /> },
   { path: "/reset-password/:email", element: <ResetPassword /> },
+  { path: "/verify-email/:token", element: <VerifyEmail /> },
+  { path: "/check-email", element: <CheckEmail /> },
 
   {
     path: "/profile/:userId",

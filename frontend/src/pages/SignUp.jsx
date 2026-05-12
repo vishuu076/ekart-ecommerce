@@ -50,15 +50,8 @@ const SignUp = () => {
             );
 
             if (res.data.success) {
-                toast.success(res.data.message);
-
-                localStorage.setItem("accessToken", res.data.accessToken);
-                localStorage.setItem("user", JSON.stringify(res.data.user));
-
-                
-                dispatch(setUser(res.data.user));
-
-                navigate("/");
+                toast.success(res.data.message || "Registration successful!");
+                navigate("/check-email", { state: { email: formData.email } });
             }
 
         } catch (err) {
