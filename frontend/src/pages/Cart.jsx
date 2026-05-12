@@ -70,17 +70,25 @@ const Cart = () => {
     loadCart();
   }, []);
 
+  // 🔥 EMPTY STATE (CENTER PERFECT)
   if (!cart?.items?.length) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] px-4 text-center">
-        <div className="bg-pink-100 p-6 rounded-full">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 text-center px-4">
+        <div className="bg-pink-100 p-6 rounded-full shadow-sm">
           <ShoppingCart className="w-14 h-14 text-pink-600" />
         </div>
-        <h2 className="mt-6 text-2xl font-bold">Your cart is empty</h2>
-        <p className="text-gray-500">Start adding products</p>
+
+        <h2 className="mt-6 text-2xl font-bold text-gray-800">
+          Your cart is empty
+        </h2>
+
+        <p className="text-gray-500 mt-2">
+          Start adding products to your cart
+        </p>
+
         <Button
           onClick={() => navigate("/products")}
-          className="mt-6 bg-pink-600"
+          className="mt-6 bg-pink-600 hover:bg-pink-700 shadow-md"
         >
           Start Shopping
         </Button>
@@ -89,58 +97,68 @@ const Cart = () => {
   }
 
   return (
-    <div className="pt-16 bg-gray-50 min-h-screen px-4">
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-6">
-        {/* LEFT */}
+    <div className="pt-navbar min-h-screen bg-gray-50">
+      <div className="mx-auto max-w-7xl px-4 py-8 flex flex-col lg:flex-row gap-8">
+
+        {/* LEFT SIDE */}
         <div className="flex-1 space-y-4">
           {cart.items.map((product) => (
-            <Card key={product.productId._id}>
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4">
-                {/* Product info */}
+            <Card
+              key={product.productId._id}
+              className="shadow-sm hover:shadow-md transition"
+            >
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4">
+
+                {/* PRODUCT INFO */}
                 <div className="flex items-center gap-4">
                   <img
                     src={product.productId?.productImg?.[0]?.url || userLogo}
-                    className="w-20 h-20 object-cover rounded"
+                    className="w-20 h-20 object-cover rounded-lg border"
                   />
+
                   <div>
-                    <h3 className="font-semibold text-sm sm:text-base">
+                    <h3 className="font-semibold text-sm sm:text-base text-gray-800 line-clamp-2">
                       {product.productId.productName}
                     </h3>
-                    <p className="text-gray-500 text-sm">
+
+                    <p className="text-pink-600 font-semibold text-sm mt-1">
                       ₹{product.productId.productPrice}
                     </p>
                   </div>
                 </div>
 
-                {/* Quantity + remove */}
+                {/* RIGHT SIDE */}
                 <div className="flex items-center justify-between sm:justify-end gap-4">
-                  <div className="flex items-center gap-2">
-                    <Button
-                      size="icon"
-                      variant="outline"
+
+                  {/* QUANTITY */}
+                  <div className="flex items-center gap-2 border rounded-lg px-2 py-1">
+                    <button
                       onClick={() =>
                         handleUpdateQuantity(product.productId._id, "decrease")
                       }
+                      className="px-2 text-lg"
                     >
                       -
-                    </Button>
-                    <span className="min-w-[20px] text-center">
+                    </button>
+
+                    <span className="min-w-[20px] text-center font-medium">
                       {product.quantity}
                     </span>
-                    <Button
-                      size="icon"
-                      variant="outline"
+
+                    <button
                       onClick={() =>
                         handleUpdateQuantity(product.productId._id, "increase")
                       }
+                      className="px-2 text-lg"
                     >
                       +
-                    </Button>
+                    </button>
                   </div>
 
+                  {/* REMOVE */}
                   <button
                     onClick={() => handleRemove(product.productId._id)}
-                    className="flex items-center gap-1 text-red-500 text-sm"
+                    className="flex items-center gap-1 text-red-500 text-sm hover:underline"
                   >
                     <Trash2 className="w-4 h-4" />
                     Remove
@@ -151,36 +169,42 @@ const Cart = () => {
           ))}
         </div>
 
-        {/* RIGHT */}
-        <Card className="w-full lg:w-[380px] h-fit sticky top-20">
+        {/* RIGHT SIDE SUMMARY */}
+        <Card className="w-full lg:w-[380px] h-fit sticky top-20 shadow-sm">
           <CardHeader>
             <CardTitle>Order Summary</CardTitle>
           </CardHeader>
+
           <CardContent className="space-y-3 text-sm">
             <div className="flex justify-between">
               <span>Subtotal</span>
               <span>₹{subtotal}</span>
             </div>
+
             <div className="flex justify-between">
               <span>Shipping</span>
               <span>₹{shipping}</span>
             </div>
+
             <div className="flex justify-between">
               <span>Tax</span>
               <span>₹{tax}</span>
             </div>
+
             <Separator />
-            <div className="flex justify-between font-bold">
+
+            <div className="flex justify-between font-bold text-lg">
               <span>Total</span>
               <span>₹{total}</span>
             </div>
 
             <Button
-              className="w-full bg-pink-600 mt-4"
+              className="w-full bg-pink-600 hover:bg-pink-700 mt-4 shadow"
               onClick={() => navigate("/address")}
             >
               PLACE ORDER
             </Button>
+
             <Button variant="outline" className="w-full">
               <Link to="/products">Continue Shopping</Link>
             </Button>

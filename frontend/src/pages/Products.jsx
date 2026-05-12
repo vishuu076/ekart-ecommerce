@@ -1,5 +1,6 @@
 import FilterSidebar from "@/components/FilterSidebar";
 import React, { useEffect, useState } from "react";
+import { Filter } from "lucide-react";
 
 import {
   Select,
@@ -26,6 +27,7 @@ const Products = () => {
   const [brand, setBrand] = useState("All");
   const [priceRange, setPriceRange] = useState([0, 0]);
   const [sortOrder, setSortOrder] = useState("");
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -94,8 +96,8 @@ const Products = () => {
   }, [search, category, brand, priceRange, sortOrder, allProducts, dispatch]);
 
   return (
-    <div className="pt-24 pb-12 bg-gray-50">
-      <div className="max-w-7xl mx-auto flex gap-8 px-4">
+    <div className="pt-navbar min-h-screen bg-gray-50">
+      <div className="mx-auto flex max-w-7xl flex-col gap-8 px-6 py-8 md:flex-row">
 
         {/* SIDEBAR */}
         <FilterSidebar
@@ -108,19 +110,30 @@ const Products = () => {
           priceRange={priceRange}
           setPriceRange={setPriceRange}
           allProducts={allProducts}
+          isOpen={isFilterOpen}
+          onClose={() => setIsFilterOpen(false)}
         />
 
         {/* PRODUCTS SECTION */}
         <div className="flex-1 flex flex-col gap-6">
 
           {/* TOP BAR */}
-          <div className="flex justify-between items-center">
-            <h1 className="text-xl font-semibold text-gray-800">
-              Showing Products
-            </h1>
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => setIsFilterOpen(true)}
+                className="md:hidden flex items-center gap-2 rounded-md border bg-white px-3 py-2 text-sm font-medium shadow-sm"
+              >
+                <Filter className="h-4 w-4" />
+                Filters
+              </button>
+              <h1 className="text-xl font-semibold text-gray-800">
+                Showing Products
+              </h1>
+            </div>
 
             <Select onValueChange={(value) => setSortOrder(value)}>
-              <SelectTrigger className="w-[200px] bg-white shadow-sm">
+              <SelectTrigger className="w-full sm:w-[200px] bg-white shadow-sm">
                 <SelectValue placeholder="Sort by price" />
               </SelectTrigger>
               <SelectContent>

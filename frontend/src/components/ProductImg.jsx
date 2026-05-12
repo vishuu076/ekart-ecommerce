@@ -6,17 +6,19 @@ import 'react-medium-image-zoom/dist/styles.css'
 const ProductImg = ({ images }) => {
     const [mainImg, setMainImg] = useState(images[0].url)
     return (
-        <div className="flex gap-5 w-max">
-            <div className="gap-5 flex flex-col">
+        <div className="flex flex-col-reverse md:flex-row gap-5">
+            <div className="flex flex-row md:flex-col gap-3 overflow-x-auto md:overflow-visible pb-2 md:pb-0">
                 {
-                    images.map((img) => {
-                        return <img src={img.url} alt={img.alt} className=" cursor-pointer w-20 h-20 border shadow-lg " onClick={() => setMainImg(img.url)} />
+                    images.map((img, idx) => {
+                        return <img key={idx} src={img.url} alt={img.alt} className="cursor-pointer w-16 h-16 sm:w-20 sm:h-20 border shadow-md object-cover flex-shrink-0" onClick={() => setMainImg(img.url)} />
                     })
                 }
             </div> 
-            <Zoom>
-                <img src={mainImg} alt="Main product" className="w-[500px] border shadow-lg" />
-            </Zoom>
+            <div className="flex-1 max-w-full overflow-hidden">
+                <Zoom>
+                    <img src={mainImg} alt="Main product" className="w-full h-auto max-w-[500px] border shadow-lg rounded-lg" />
+                </Zoom>
+            </div>
         </div>
     )
 }

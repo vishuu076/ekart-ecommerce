@@ -98,9 +98,9 @@ const Profile = () => {
   };
 
   return (
-    <div className="pt-20 min-h-screen bg-gray-100">
+    <div className="pt-25 min-h-screen bg-gray-50/50 pb-12">
       <Tabs defaultValue="profile" className="max-w-7xl mx-auto">
-        <TabsList>
+        <TabsList className="mb-5 flex justify-center">
           <TabsTrigger className="cursor-pointer" value="profile">
             Profile
           </TabsTrigger>
@@ -110,12 +110,12 @@ const Profile = () => {
         </TabsList>
 
         <TabsContent value="profile">
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center px-4">
             <h1 className="font-bold mb-7 text-2xl text-gray-800">
               Update Profile
             </h1>
 
-            <div className="w-full flex gap-10 justify-between items-start px-7 max-w-2xl">
+            <div className="w-full flex flex-col md:flex-row gap-10 justify-center items-center md:items-start max-w-4xl">
               {/* Profile picture */}
               <div className="flex flex-col items-center">
                 <img
@@ -137,57 +137,72 @@ const Profile = () => {
               {/* Profile form */}
               <form
                 onSubmit={handleSubmit}
-                className="space-y-4 shadow-lg p-5 rounded-lg bg-white"
+                className="w-full max-w-md space-y-4 shadow-lg p-5 rounded-lg bg-white"
               >
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="firstName">First Name</Label>
+                    <Input
+                      id="firstName"
+                      name="firstName"
+                      value={updateUser.firstName || ""}
+                      onChange={handleChange}
+                      placeholder="First Name"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="lastName">Last Name</Label>
+                    <Input
+                      id="lastName"
+                      name="lastName"
+                      value={updateUser.lastName || ""}
+                      onChange={handleChange}
+                      placeholder="Last Name"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="email">Email</Label>
+                  <Input id="email" value={updateUser.email} disabled />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="phoneNo">Phone Number</Label>
                   <Input
-                    name="firstName"
-                    value={updateUser.firstName || ""}
+                    id="phoneNo"
+                    name="phoneNo"
+                    value={updateUser.phoneNo || ""}
                     onChange={handleChange}
-                    placeholder="First Name"
-                  />
-                  <Input
-                    name="lastName"
-                    value={updateUser.lastName || ""}
-                    onChange={handleChange}
-                    placeholder="Last Name"
+                    placeholder="Phone Number"
                   />
                 </div>
 
-                <Input value={updateUser.email} disabled />
-
-                <Input
-                  name="phoneNo"
-                  value={updateUser.phoneNo || ""}
-                  onChange={handleChange}
-                  placeholder="Phone Number"
-                />
-
-                <Input
-                  name="address"
-                  value={updateUser.address || ""}
-                  onChange={handleChange}
-                  placeholder="Address"
-                />
-
-                <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="address">Address</Label>
                   <Input
-                    name="city"
-                    value={updateUser.city || ""}
+                    id="address"
+                    name="address"
+                    value={updateUser.address || ""}
                     onChange={handleChange}
-                    placeholder="City"
-                  />
-                  <Input
-                    name="zipCode"
-                    value={updateUser.zipCode || ""}
-                    onChange={handleChange}
-                    placeholder="Zip Code"
+                    placeholder="Address"
                   />
                 </div>
 
-                {/* 🔒 ROLE SECTION COMPLETELY REMOVED */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="zipCode">Zip Code</Label>
+                    <Input
+                      id="zipCode"
+                      name="zipCode"
+                      value={updateUser.zipCode || ""}
+                      onChange={handleChange}
+                      placeholder="Zip Code"
+                    />
+                  </div>
+                </div>
 
-                <Button className="w-full mt-4 bg-pink-600 hover:bg-pink-700 cursor-pointer">
+                <Button className="w-full mt-4 bg-pink-600 hover:bg-pink-700 cursor-pointer shadow-lg hover:shadow-pink-100 transition-all active:scale-95 font-semibold">
                   Update Profile
                 </Button>
               </form>

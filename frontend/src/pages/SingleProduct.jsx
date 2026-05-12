@@ -11,17 +11,21 @@ const SingleProduct = () => {
 
   const product = products.find((item) => item._id === id);
 
-  // 🔴 IMPORTANT GUARD (THIS FIXES BUILD)
+
   if (!product) {
     return (
-      <div className="pt-32 text-center text-gray-500">
-        Loading product...
+    <div className="pt-navbar min-h-screen bg-gray-50 pb-20">
+      <div className="mx-auto max-w-7xl px-6 py-8 lg:px-10">
+        <div className="text-center text-gray-500">
+          Loading product...
+        </div>
       </div>
+    </div>
     );
   }
 
   return (
-    <div className="pt-20 pb-10 max-w-7xl mx-auto px-4">
+    <div className="pt-32 pb-10 max-w-7xl mx-auto px-4">
       <Breadcrums product={product} />
 
       <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-10 items-start">

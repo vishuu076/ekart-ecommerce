@@ -33,20 +33,32 @@ const MyOrders = () => {
   }, []);
 
   return (
-    <div className="pt-24 pb-10 bg-gray-50 min-h-screen">
-      <div className="max-w-7xl mx-auto px-4">
-        <h1 className="text-2xl font-bold text-gray-800 mb-6">
+    <div className="min-h-screen bg-gray-50 pt-5">
+
+      {/* 🔥 FIXED CONTAINER (gap reduce) */}
+      <div className="max-w-5xl mx-auto px-4 pt-4 pb-4">
+
+        {/* ❌ REMOVE EXTRA TABS HERE (important) */}
+        {/* Agar upar already Profile/Orders dikh rahe hai to yaha kuch mat daal */}
+
+        {/* ✅ ONLY HEADING */}
+        <h1 className="text-2xl font-bold text-gray-800 mb-4">
           My Orders
         </h1>
 
+        {/* CONTENT */}
         {loading ? (
-          <p className="text-gray-500">Loading your orders...</p>
+          <p className="text-center py-20 text-gray-500">
+            Loading your orders...
+          </p>
         ) : userOrder.length === 0 ? (
           <div className="text-center py-20 text-gray-500">
-            You haven’t placed any orders yet.
+            No orders found.
           </div>
         ) : (
-          <OrderCard userOrder={userOrder} />
+          <div className="space-y-5">
+            <OrderCard userOrder={userOrder} />
+          </div>
         )}
       </div>
     </div>

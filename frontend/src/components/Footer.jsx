@@ -9,7 +9,7 @@ const Footer = () => {
       <div className="mx-auto max-w-7xl px-6 py-14">
         
         {/* Top Section */}
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
           
           {/* Brand */}
           <div className="space-y-4">

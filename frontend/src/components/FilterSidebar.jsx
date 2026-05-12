@@ -1,6 +1,7 @@
 import React from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { X } from "lucide-react";
 
 const FilterSidebar = ({
   search,
@@ -12,6 +13,8 @@ const FilterSidebar = ({
   priceRange,
   setPriceRange,
   allProducts = [],
+  isOpen,
+  onClose,
 }) => {
   const categories = ["All", ...new Set(allProducts.map((p) => p.category))];
   const brands = ["All", ...new Set(allProducts.map((p) => p.brand))];
@@ -29,7 +32,19 @@ const FilterSidebar = ({
   };
 
   return (
-    <aside className="hidden md:block w-64 rounded-lg border bg-white p-5 shadow-sm">
+    <aside
+      className={`
+      ${isOpen ? "translate-x-0" : "-translate-x-full"} 
+      md:translate-x-0 fixed inset-y-0 left-0 z-30 w-72 bg-white p-6 shadow-xl transition-transform duration-300 ease-in-out md:static md:block md:w-64 md:rounded-lg md:border md:shadow-sm
+    `}
+    >
+      {/* Mobile Close Button */}
+      <div className="flex items-center justify-between md:hidden mb-6">
+        <h2 className="text-lg font-bold text-gray-900">Filters</h2>
+        <button onClick={onClose} className="p-2 text-gray-500">
+          <X className="h-6 w-6" />
+        </button>
+      </div>
       
       {/* Search */}
       <div className="space-y-2">

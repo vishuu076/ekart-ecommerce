@@ -48,7 +48,6 @@ const Login = () => {
       );
 
       if (res.data.success) {
-        // ✅ Save auth properly
         localStorage.setItem("accessToken", res.data.accessToken);
         localStorage.setItem("user", JSON.stringify(res.data.user));
 

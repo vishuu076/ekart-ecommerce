@@ -1,79 +1,103 @@
 import React from "react";
-import { Button } from "./ui/button";
-import { ArrowBigLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-const OrderCard = ({userOrder}) => {
-    const navigate = useNavigate();
-    
+const OrderCard = ({ userOrder }) => {
+  const navigate = useNavigate();
+
+  if (!userOrder || userOrder.length === 0) {
     return (
-        <div className=" pr-20 flex flex-col gap-3">
-            <div className="w-full p-6">
-                <div className="flex items-center gap-4 mb-6">
-                    <Button onClick={() => navigate(-1)} className='cursor-pointer'><ArrowBigLeft></ArrowBigLeft></Button>
-                    <h1 className="text-2xl font-bold">Orders</h1>
-                </div>
-                {
-                    userOrder?.length === 0 ? (
-                        <p className="text-gray-800 space-y-4 text-2xl ">No orders found this user</p>
-                    ) : (
-                        <div className="space-y-6 w-full">
-                            {
-                                userOrder?.map((order) => (
-                                    <div key={order._id} className="shadow-lg rounded-2xl p-5 border border-gray-200">
-                                        <div className="flex justify-between items-center mb-4">
-                                            <h2 className="text-lg font-semibold">
-                                                Order ID:{" "}
-                                                <span className="text-gray-600">{order._id}</span>
-                                            </h2>
-                                            <p className="text-sm text-gray-500">
-                                                Amount:{" "}
-                                                <span className="font-bold">
-                                                    {order.currency} {order.amount.toFixed(2)}
-                                                </span>
-                                            </p>
-                                        </div>
+      <p className="text-center py-20 text-gray-500">
+        No orders found
+      </p>
+    );
+  }
 
-                                        <div className="flex justify-between items-center">
-                                            <div className=" mb-4">
-                                                <p className="text-sm text-gray-700">
-                                                    <span className="font-medium">User:</span>{" "}
-                                                    {order.user?.firstName || "unknown"} {order.user?.lastName}
-                                                </p>
-                                                <p className="text-sm text-gray-500">
-                                                    Email: {order.user?.email || "N/A"}
-                                                </p>
-                                            </div>
-                                            <span className={`${order.status === "Paid" ? "bg-green-500" : order.status === "Failed" ? "bg-red-500" : "bg-orange-300"} text-white px-2 py-1 rounded-lg`}>{order.status}</span>
-                                        </div>
-
-                                        <div className="">
-                                            <h3 className="font-medium mb-2">Products</h3>
-                                            <ul className="space-y-2">
-                                                {
-                                                    order.products.map((product, index) => (
-                                                        <li key={index} className="flex justify-between items-center bg-gray-50 p-3 rounded-lg">
-                                                            <img onClick={() => navigate(`/products/${product?.productId?._id}`)} className="w-16 cursor-pointer" src={product?.productId?.productImg[0]?.url} alt="" />
-                                                            <span className="w-[300px] line-clamp-2">{product.productId?.productName}</span>
-                                                            <span className="">{product.productId?._id}</span>
-                                                            <span className="font-medium">
-                                                                ₹{product.productId?.productPrice}  x {product.quantity}
-
-                                                            </span>
-                                                        </li>
-                                                    ))
-                                                }
-                                            </ul>
-                                        </div>
-                                    </div>
-                                ))
-                            }
-                        </div>
-                    )
-                }
+  return (
+    <div className="space-y-6">
+      {userOrder.map((order) => (
+        <div
+          key={order._id}
+          className="bg-white border rounded-xl shadow-sm p-5"
+        >
+          {/* TOP */}
+          <div className="flex justify-between items-start mb-4">
+            <div>
+              <p className="text-sm text-gray-500">Order ID</p>
+              <p className="font-medium text-gray-800 break-all">
+                {order._id}
+              </p>
             </div>
-        </div>
-    )
-}
 
-export default OrderCard
+            <div className="text-right">
+              <p className="text-sm text-gray-500">Amount</p>
+              <p className="font-semibold">
+                {order.currency} {order.amount.toFixed(2)}
+              </p>
+              <span
+                className={`inline-block mt-2 text-xs px-2 py-1 rounded-md text-white ${
+                  order.status === "Paid"
+                    ? "bg-green-500"
+                    : order.status === "Failed"
+                    ? "bg-red-500"
+                    : "bg-orange-400"
+                }`}
+              >
+                {order.status}
+              </span>
+            </div>
+          </div>
+
+          {/* USER */}
+          <div className="mb-4 text-sm text-gray-600">
+            <p>
+              <span className="font-medium text-gray-800">User:</span>{" "}
+              {order.user?.firstName} {order.user?.lastName}
+            </p>
+            <p>Email: {order.user?.email}</p>
+          </div>
+
+          {/* PRODUCTS */}
+          <div className="border-t pt-4">
+            <p className="font-medium mb-3 text-gray-800">Products</p>
+
+            <div className="space-y-3">
+              {order.products.map((product, index) => (
+                <div
+                  key={index}
+                  className="flex items-center gap-4"
+                >
+                  {/* IMAGE */}
+                  <img
+                    onClick={() =>
+                      navigate(`/products/${product?.productId?._id}`)
+                    }
+                    src={product?.productId?.productImg[0]?.url}
+                    className="w-14 h-14 object-cover rounded-md cursor-pointer border"
+                    alt=""
+                  />
+
+                  {/* DETAILS */}
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-gray-800 line-clamp-2">
+                      {product.productId?.productName}
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      Qty: {product.quantity}
+                    </p>
+                  </div>
+
+                  {/* PRICE */}
+                  <div className="text-sm font-semibold">
+                    ₹{product.productId?.productPrice}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default OrderCard;

@@ -12,7 +12,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import axios from "axios";
-import { Loader2 } from "lucide-react";
+import {
+  Loader2,
+  Package,
+  IndianRupee,
+  Tag,
+  Layers,
+  FileText,
+  PlusCircle,
+} from "lucide-react";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
@@ -85,8 +93,8 @@ const AddProduct = () => {
   };
 
   return (
-    <div className="bg-gray-50 py-8">
-      <Card className="mx-auto max-w-3xl">
+    <div className="bg-transparent py-6 w-full flex justify-center">
+      <Card className="w-full max-w-2xl shadow-xl shadow-pink-100/50 border-pink-100/30 overflow-hidden bg-white">
         <CardHeader>
           <CardTitle>Add Product</CardTitle>
           <CardDescription>
@@ -98,59 +106,79 @@ const AddProduct = () => {
           <div className="flex flex-col gap-5">
             
             <div className="grid gap-2">
-              <Label>Product Name</Label>
+              <Label className="flex items-center gap-2 text-[13px] font-semibold text-gray-600 uppercase tracking-wider">
+                <Package className="h-4 w-4 text-pink-500" />
+                Product Name
+              </Label>
               <Input
                 name="productName"
                 value={productData.productName}
                 onChange={handleChange}
-                placeholder="e.g. iPhone 15"
+                placeholder="e.g. iPhone 17 Pro Max"
+                className="focus-visible:ring-pink-500"
                 required
               />
             </div>
 
             <div className="grid gap-2">
-              <Label>Price</Label>
+              <Label className="flex items-center gap-2 text-[13px] font-semibold text-gray-600 uppercase tracking-wider">
+                <IndianRupee className="h-4 w-4 text-pink-500" />
+                Price (INR)
+              </Label>
               <Input
                 type="number"
                 name="productPrice"
                 value={productData.productPrice}
                 onChange={handleChange}
+                className="focus-visible:ring-pink-500"
                 required
               />
             </div>
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="grid gap-2">
-                <Label>Brand</Label>
+                <Label className="flex items-center gap-2 text-[13px] font-semibold text-gray-600 uppercase tracking-wider">
+                  <Tag className="h-4 w-4 text-pink-500" />
+                  Brand
+                </Label>
                 <Input
                   name="brand"
                   value={productData.brand}
                   onChange={handleChange}
                   placeholder="Apple"
+                  className="focus-visible:ring-pink-500"
                   required
                 />
               </div>
 
               <div className="grid gap-2">
-                <Label>Category</Label>
+                <Label className="flex items-center gap-2 text-[13px] font-semibold text-gray-600 uppercase tracking-wider">
+                  <Layers className="h-4 w-4 text-pink-500" />
+                  Category
+                </Label>
                 <Input
                   name="category"
                   value={productData.category}
                   onChange={handleChange}
                   placeholder="Mobile"
+                  className="focus-visible:ring-pink-500"
                   required
                 />
               </div>
             </div>
 
             <div className="grid gap-2">
-              <Label>Description</Label>
+              <Label className="flex items-center gap-2 text-[13px] font-semibold text-gray-600 uppercase tracking-wider">
+                <FileText className="h-4 w-4 text-pink-500" />
+                Description
+              </Label>
               <Textarea
                 name="productDesc"
                 value={productData.productDesc}
                 onChange={handleChange}
                 placeholder="Brief description of the product"
                 rows={4}
+                className="focus-visible:ring-pink-500 resize-none"
               />
             </div>
 
@@ -165,15 +193,18 @@ const AddProduct = () => {
           <Button
             onClick={submitHandler}
             disabled={loading}
-            className="w-full bg-pink-600 hover:bg-pink-700 cursor-pointer"
+            className="w-full bg-pink-600 hover:bg-pink-700 cursor-pointer shadow-lg hover:shadow-pink-200 transition-all font-semibold flex items-center justify-center gap-2"
           >
             {loading ? (
-              <span className="flex items-center gap-2">
+              <>
                 <Loader2 className="h-4 w-4 animate-spin" />
-                Adding product...
-              </span>
+                Adding Product...
+              </>
             ) : (
-              "Add Product"
+              <>
+                <PlusCircle className="h-4 w-4" />
+                Add Product
+              </>
             )}
           </Button>
         </CardFooter>

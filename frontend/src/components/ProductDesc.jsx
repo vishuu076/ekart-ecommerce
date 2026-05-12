@@ -26,15 +26,15 @@ const ProductDesc = ({ product }) => {
     }
     return (
         <div className="flex flex-col gap-4">
-            <h1 className="text-4xl font-bold text-gray-800">{product.productName}</h1>
-            <p className="text-gray-600">{product.category} | {product.brand}</p>
-            <h2 className="text-2xl font-bold text-pink-500">₹{product.productPrice}</h2>
-            <p className="line-clamp-12 text-muted-foreground">{product.productDesc}</p>
-            <div className="flex gap-2 items-center w-[300px]">
-                <p className="text-gray-800 font-semibold">Quantity :</p>
-                <Input type="number" min="1" defaultValue="1" className="w-14" />
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 tracking-tight">{product.productName}</h1>
+            <p className="text-sm sm:text-base text-gray-600 font-medium">{product.category} | {product.brand}</p>
+            <h2 className="text-xl sm:text-2xl font-bold text-pink-500">₹{product.productPrice}</h2>
+            <p className="line-clamp-6 sm:line-clamp-12 text-sm sm:text-base text-muted-foreground leading-relaxed">{product.productDesc}</p>
+            <div className="flex gap-4 items-center max-w-[300px]">
+                <p className="text-gray-800 font-semibold whitespace-nowrap">Quantity:</p>
+                <Input type="number" min="1" defaultValue="1" className="w-16" />
             </div>
-            <Button onClick={()=>addToCart(product._id)} className="bg-pink-500 hover:bg-pink-600 w-max text-white cursor-pointer">Add to Cart</Button>
+            <Button onClick={()=>addToCart(product._id)} className="bg-pink-500 hover:bg-pink-600 sm:w-max text-white cursor-pointer px-8 py-6 text-lg font-semibold shadow-lg transition-transform active:scale-95">Add to Cart</Button>
         </div>
     )
 }
