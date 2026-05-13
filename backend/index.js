@@ -39,8 +39,14 @@ app.use((err, req, res, next) => {
 });
 
 
+// Connect to Database
+connectDB();
+
+app.get("/", (req, res) => {
+  res.send("API is running...");
+});
+
 app.listen(PORT, () => {
-  connectDB();
   console.log(`Server running on port ${PORT}`);
 });
 
