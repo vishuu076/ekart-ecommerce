@@ -35,11 +35,17 @@ export const register = async (req, res) => {
 
         const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: '10m' });
 
-        newUser.token = token;
+        // Save user
         await newUser.save();
 
-        // Send verification email
-        await verifyEmail(token, email);
+        try {
+            // Send verification email
+            await verifyEmail(token, email);
+        } catch (emailError) {
+            // If email fails, delete the user so they can try again
+            await User.findByIdAndDelete(newUser._id);
+            throw new Error("Failed to send verification email. Please check your email settings. " + emailError.message);
+        }
 
         res.status(201).json({
             success: true,

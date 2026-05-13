@@ -34,6 +34,7 @@ app.use(
 
 // Routes
 app.use("/api/auth", userRoute);
+app.use("/auth", userRoute); // Fallback for some deployment configurations
 app.use("/api/product", productRoute);
 app.use("/api/cart", CartRoutes);
 app.use("/api/orders", orderRoute);
