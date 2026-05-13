@@ -9,11 +9,14 @@ import productRoute from "./routes/productRoute.js";
 import CartRoutes from "./routes/cartRoutes.js";
 import orderRoute from "./routes/orderRoute.js";
 
+import dbMiddleware from "./middleware/dbMiddleware.js";
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middlewares
 app.use(express.json());
+app.use(dbMiddleware); // Ensure DB connection for every request
 
 app.use(
   cors({
@@ -38,9 +41,6 @@ app.use((err, req, res, next) => {
   });
 });
 
-
-// Connect to Database
-connectDB();
 
 app.get("/", (req, res) => {
   res.send("API is running...");
