@@ -10,6 +10,7 @@ import cloudinary from "../utils/cloudinary.js";
 
 
 export const register = async (req, res) => {
+    console.log("REGISTER REQUEST RECEIVED:", req.body);
     try {
         const { firstName, lastName, email, password } = req.body;
 
