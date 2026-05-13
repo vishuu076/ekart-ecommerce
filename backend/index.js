@@ -16,6 +16,12 @@ const PORT = process.env.PORT || 3000;
 
 // Middlewares
 app.use(express.json());
+
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  next();
+});
+
 app.use(dbMiddleware); // Ensure DB connection for every request
 
 app.use(
